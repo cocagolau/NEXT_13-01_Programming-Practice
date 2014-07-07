@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Registration</title>
+        <link rel=stylesheet href="../static/login.css">
+    </head>
+    <body>
+
+        <div class="container">
+            {% if username %}
+                Hello Sir.
+                <b><u><i><font size='15'>{{ username }}</font></i></u></b><br>
+                <a href='/logout'>Logout</a><br>
+                <a href='/'>Go to MAIN page</a>
+            {% else %}
+            
+                <section id='content'>
+                    
+                    <form method=post action="/login">
+                        <h1>Login Form Page</h1>
+                        <div>
+                            <input type="text" placeholder="username" required="" name="name">
+                        </div>
+                        <div>
+                            <input type="password" placeholder="Password" required="" name="password">
+                        </div>
+                        <div>
+                            <input type=submit value=login>
+                        </div>
+                    </form>
+                </section>
+            {% endif %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,359 @@
+출처 : 빠르게 활용하는 파이썬 3 프로그래밍 (신호철,우상정,최종진 지음)
+
+정규표현식에서 사용되는 특수문자들을 익히기 위해
+re 를 이용하여 확인해보았다.
+
+파이썬 쉘에서
+>>>import re
+를 치면 re 메소드를 이용할 수 있다.
+
+1. 정규표현식에서 사용되는 특수문자들
+
+1) . (하나의 문자를 의미)
+>>> bool(re.search('app.e','apple'))
+True
+>>> bool(re.search('app.e','app.e'))
+True
+>>> bool(re.search('app.e','app3e'))
+True
+>>> bool(re.search('app.e','appe')) 
+False
+
+2) ^ (문자열의 시작을 의미)
+>>> bool(re.search('^app','apple and orange'))
+True
+>>> bool(re.search('^app','orange and apple'))
+False
+
+3) $ (문자열의 종료를 의미)
+>>> bool(re.search('ple$','orange and apple'))
+True
+>>> bool(re.search('ple$','apple and orange'))
+False
+
+4) [] (문자열의 집합을 의미, 병렬적으로 문자를 나열하면 or 가 붙어 있다고 여기면 됨.)
+>>> bool(re.search('appl[a-z]','apple'))           
+True
+>>> bool(re.search('appl[a-z]','applz'))
+True
+>>> bool(re.search('appl[a-z]','appl')) 
+False
+>>> bool(re.search('appl[a-z]','appl2'))
+False
+
+5) []안에서 ^가 쓰였을 경우 (제외한 경우를 나타냄, 밖에서 쓰였을 경우 문자열의 처음을 나타냄)
+
+<a-z의 모든 문자를 제외한 문자가 붙은 경우>
+>>> bool(re.search('appl[^a-z]','apple'))
+False
+>>> bool(re.search('appl[^a-z]','applz'))
+False
+>>> bool(re.search('appl[^a-z]','appl')) 
+False
+>>> bool(re.search('appl[^a-z]','appl2'))
+True
+
+<c,d,e이외의 문자가 붙은 경우>
+>>> bool(re.search('appl[^cde]','applc'))
+False
+>>> bool(re.search('appl[^cde]','appld'))
+False
+>>> bool(re.search('appl[^cde]','apple'))
+False
+>>> bool(re.search('appl[^cde]','applf'))
+True
+>>> bool(re.search('appl[^cde]','applz'))
+True
+>>> bool(re.search('appl[^cde]','appl')) 
+False
+
+6) | : or 의 의미
+
+<e 또는 E>
+>>> bool(re.search('apple|E','apple'))  
+True
+>>> bool(re.search('apple|E','applE'))
+True
+>>> bool(re.search('apple|E','applz'))
+False
+>>> bool(re.search('apple|E','appl')) 
+False
+
+<e 또는 E, 뒤의 문자에는 적용되지 않는 것을 알 수 있음>
+>>> bool(re.search('apple|Es','apples'))
+True
+>>> bool(re.search('apple|Es','applEs'))
+True
+>>> bool(re.search('apple|Es','appls')) 
+False
+
+<[]를 적용해도 된다는 것을 알 수 있음. 보기에 더 좋은 듯>
+>>> bool(re.search('appl[e|E]','apple'))
+True
+>>> bool(re.search('appl[e|E]','applE'))
+True
+>>> bool(re.search('appl[e|E]','applz'))
+False
+>>> bool(re.search('appl[e|E]','appl')) 
+False
+
+7) () : 괄호안의 정규식을 그룹으로 만든다
+
+8) * : 문자가 0회 이상 반복됨
+<p가 0회 이상 반복, p가 없는 경우에도 성립>
+>>> bool(re.search('ap*le','ale'))          
+True
+>>> bool(re.search('ap*le','aple'))
+True
+>>> bool(re.search('ap*le','apple'))
+True
+>>> bool(re.search('ap*le','apppple'))
+True
+
+9) + : 문자가 1회 이상 반복됨, *와는 달리 문자가 없을때는 인식되지 않음
+>>> bool(re.search('ap+le','ale'))    
+False
+>>> bool(re.search('ap+le','aple'))
+True
+>>> bool(re.search('ap+le','apple'))
+True
+>>> bool(re.search('ap+le','appppple'))
+True
+
+10) ? : 문자가 0회 또는 1회 반복됨
+<오직 0회 또는 1회 반복될 때만 쓰임>
+>>> bool(re.search('ap?le','ale'))     
+True
+>>> bool(re.search('ap?le','aple'))
+True
+>>> bool(re.search('ap?le','apple'))
+False
+
+11) {m} : 문자가 m회 반복됨
+<p가 오직 2회 반복>
+>>> bool(re.search('ap{2}le','ale'))  
+False
+>>> bool(re.search('ap{2}le','aple'))
+False
+>>> bool(re.search('ap{2}le','apple'))
+True
+>>> bool(re.search('ap{2}le','appple'))
+False
+
+12) {m,n} : 문자가 m회부터 n회까지 반복됨
+<p가 오직 2에서 4회 반복될 때만 참>
+>>> bool(re.search('ap{2,4}le','aple'))
+False
+>>> bool(re.search('ap{2,4}le','apple'))
+True
+>>> bool(re.search('ap{2,4}le','appple'))
+True
+>>> bool(re.search('ap{2,4}le','apppple'))
+True
+>>> bool(re.search('ap{2,4}le','appppple'))
+False
+
+13) {m,} : 문자가 m회부터 무한반복
+<p가 2회 이상 반복될 때 참>
+>>> bool(re.search('ap{2,}le','aple'))     
+False
+>>> bool(re.search('ap{2,}le','apple'))
+True
+>>> bool(re.search('ap{2,}le','appple'))   
+True
+>>> bool(re.search('ap{2,}le','apppple'))
+True
+
+2. 정규표현식의 개행문자들
+
+먼저 개행문자를 알아보기 전에 알아두어야 할 것이 있다.
+\에 대한 것인데, 정규표현식에서 \는 \자체로 인식되지 않는다.
+이를 위해서는 \에 \를 써주어야 한다.
+즉 정규표현식에서 \b는 '\\b'로 써주어야만 한다.
+이런 복잡한 표현을 피하기 위해서 문자열 앞에 r을 넣어주면,
+\가 \로 인식된다.
+즉,
+'\\b'는
+r'\b'로 써도 같은 의미가 된다.
+따라서 정규표현식은 가능하면 문자열 앞에서 r을 붙여주면 좋다.
+아래에서는 모두 r을 붙여서 좀더 쉽게 정규표현식을 볼 수 있도록 하겠다.
+
+1) \w
+_와 모든 알파벳, 숫자를 의미한다. 즉,
+r'\w'는 [a-zA-Z0-9_]와 같은 의미이다.
+예를 들어보자.
+
+>>> a='apple and orange and apple'
+>>> bool(re.search('ge',a))       
+True
+>>> bool(re.search(r'ge\w',a))
+False
+
+a라는 문자열에는 ge가 들어있다.
+따라서 그냥 ge를 검색하면 참이 된다.
+하지만 ge뒤에 \w를 붙여주자 문자열을 찾지 못한다.
+이는 ge뒤에 문자가 붙어있어야 하는데, 
+a라는 문자열에는 ge[a-zA-Z0-9_]라는 문자가 존재하지 않기 때문이다.
+
+2) \\
+\w의 반대이다. 즉 [^a-zA-Z0-9_]
+
+3) \d
+[0-9]와 동일한 의미, 숫자 하나를 의미
+
+이 개행문자를 좀더 잘 사용하기 위해서 re의 메소드 중,
+findall이라는 메소드를 사용해보자.
+re.findall()이라는 함수는 매칭되는 모든 경우를 찾아 리스트로 반환한다.
+
+예)
+
+>>> a='10min 13week 11 day'
+>>> re.findall(r'\d',a)
+['1', '0', '1', '3', '1', '1']
+
+\d를 이용하여 a라는 문자열에서 모든 숫자를 분리해내었다.
+
+하지만 이 경우 숫자들을 각각 따로 분리해낸 것을 알 수 있다.
+우리가 원하는 것은 위 숫자들을 10,13,11로 분리해내는 것이라고 가정해보자.
+위에서 배운 특수문자를 이용해보자. 특수문자 중 + 는 1회이상 반복되는 경우를 의미한다.
+따라서
+\d+라고 쓰는 것은 숫자가 연속으로 나오는 경우를 의미한다.
+이를 사용하여 다시 위 문자열에 findall 메소드를 적용해보자.
+
+>>> re.findall(r'\d+',a)
+['10', '13', '11']
+
+정확히 숫자만 분리해내었다.
+
+앞에서 배운 특수 문자 중[^]를 이용하면, 문자만 분리해낼 수 있다.
+즉,
+
+>>> re.findall(r'[^\d]+',a)
+['min ', 'week ', ' day']
+
+문자만 분리해내었다.
+
+4) \D
+
+\d의 반대이다. 즉, [^0-9]를 의미한다.
+앞의 예제에서 문자만 분리해내는 것을 다음과 같이 할 수도 있다.
+
+>>> re.findall(r'\D+',a)   
+['min ', 'week ', ' day']
+
+5) \s
+공백문자를 의미한다. 즉, [\t\n\r\f\v]를 의미한다. 즉, 모든 종류의 공백문자이다.
+가령 공백을 기준으로 리스트를 만들고자 한다고 생각해보자.
+
+이번에도 [^]를 이용하자. 즉, 공백문자가 아닌 문자만을 검색하는 것이다. 
+다음과 같이 하면 될 것이다.
+
+>>> re.findall(r'[^\s]+',a)
+['10min', '13week', '11', 'day']
+
+6) \S
+
+\s의 반대이다. 위의 예제를 다음과 같이 바꿀 수 있다.
+
+>>> re.findall(r'\S+',a)   
+['10min', '13week', '11', 'day']
+
+7) \b
+단어의 시작과 끝의 빈 공백을 의미한다.
+
+a라는 문자열에서 11은 독립적으로 다른 단어들과 떨어져있다.
+따라서 다음과 같이 \b가 앞뒤로 붙어도 모두 같은 패턴을 찾아낸다.
+>>> re.findall(r'\b11',a)  
+['11']
+>>> re.findall(r'11\b',a)
+['11']
+>>> re.findall(r'\b11\b',a)
+['11']
+
+하지만 10의 경우는 뒤에 단어가 붙어있다. 따라서 다음과 같은 결과가 나옴을 알 수 있다.
+>>> re.findall(r'10\b',a)  
+[]
+>>> re.findall(r'\b10',a)
+['10']
+>>> re.findall(r'\b10\b',a)
+[]
+
+8) \B
+\b와 반대의 경우이다. 공백 이외의 무언가가 붙어있는 경우를 의미한다.
+위의 예제를 가지고 시험해보면 \b 일 때와는 반대의 결과를 주는 것을 알 수 있다.
+
+>>> re.findall(r'\B11',a)
+[]
+>>> re.findall(r'11\B',a)
+[]
+>>> re.findall(r'\B11\B',a)
+[]
+
+>>> re.findall(r'10\B',a)  
+['10']
+>>> re.findall(r'\B10',a)  
+[]
+>>> re.findall(r'\B10\B',a)
+[]
+
+9) \\
+\문자 자체를 의미한다.
+
+\문자 자체는 문자열로 인식이 안된다. 항상 \\를 써야만 \로 인식이 된다.
+예를 들어보자.
+
+>>> a='\'
+  File "<stdin>", line 1
+    a='\'
+        ^
+SyntaxError: EOL while scanning string literal
+
+에러가 난다는 것을 알 수 있다.
+이번에는 다음과 같이 써보자.
+
+>>> a='\\'
+>>> a
+'\\'
+
+얼핏 \로 인식이 안되는 것처럼 보이는데, print를 해보면 \로 인식이 됨을 알 수 있다.
+
+>>> print(a)
+\
+
+자, 이제 \자체가 포함된, \apple이라는 문자열을 검색해야 한다고 생각해보자.
+이 문자열은 다음과 같이 표현된다.
+
+>>> a="\\apple"
+>>> print(a)
+\apple
+
+이 문자열을 검색해내려면, 다음과 같은 복잡한 표현이 필요하다.
+
+\가 2개 이므로,
+\\ \\ 그리고, apple이라는 문자는 개행문자를 이용하여 \w+로 표현할 수 있다.
+따라서 위 표현에 맞는 정규표현식은,
+
+"\\\\\w+"가 된다.
+
+따라서,
+
+>>> bool(re.search("\\\\\w+","\\apple"))
+True
+
+좀더 간단히 r을 이용하여 표현하면,
+
+>>> a=r'\apple'                        
+>>> bool(re.search(r"\\\w+",a))
+True
+
+실제로 a는 '\\apple'로 저장되어 있기 때문에 \가 세번 사용되었다.
+
+10) \[숫자]
+지정된 숫자만큼 일치하는 문자열을 의미한다.
+<어떻게 사용하는지 잘 모르겠음..>
+
+11) \A
+문자열의 시작
+
+12) \Z
+문자열의 끝

@@ -1,0 +1,91 @@
+[SUMMARY REPORT]
+"File does not exist" :  236개
+"Invalid URI in request GET invalid" :  1개
+"script not found or unable to stat" :  30개
+"client denied by server configuration" :  34개
+"attempt to invoke directory as script" :  1개
+
+
+[Detail REPORT]
+--------------------------------------------
+1.File does not exist
+/Library/WebServer/Documents/favicon.ico
+/Library/WebServer/Documents/favicon.icod
+/Library/WebServer/Documents/test2.html
+/Library/WebServer/Documents/test3.html
+/Library/WebServer/Documents/test.jpg, referer http//88.191.128.200/lb_compiled_js.html
+/Library/WebServer/Documents/testa.jpg, referer http//88.191.128.200/lb_compiled_js.html
+/Library/WebServer/Documents/testa.jpg
+/Library/WebServer/Documents/test.jpg
+/Library/WebServer/Documents/pixel.gif, referer http//cti.w55c.net/ct/rubicon-cms2.html
+/Library/WebServer/Documents/scrolling_tiles/tiles2.png)
+/Library/WebServer/Documents/non_existant_web_link123511.htm
+/Library/WebServer/Documents/error
+/Library/WebServer/Documents/doc
+/Library/WebServer/Documents/server-info
+/Library/WebServer/Documents/server-status
+/Library/WebServer/Documents/site
+/Library/WebServer/Documents/cowsconf
+/Library/WebServer/Documents/edit_image.php
+/Library/WebServer/Documents/directory.php
+/Library/WebServer/Documents/code
+/Library/WebServer/Documents/foldoc
+/Library/WebServer/Documents/Admin_files
+/Library/WebServer/Documents/admin-serv
+/Library/WebServer/Documents/PSUser
+/Library/WebServer/Documents/perl
+/Library/WebServer/Documents/index.php
+/Library/WebServer/Documents/modules.php
+/Library/WebServer/Documents/ROADS
+/Library/WebServer/Documents/scripts
+/Library/WebServer/Documents/examples
+/Library/WebServer/Documents/way-board
+/Library/WebServer/Documents/test.funmin, referer http//funmin.com/online-games/n-puzzle/index.php
+/Library/WebServer/Documents/delivery, referer http//news.hankooki.com/ad/hk_ad_page_250250.htm
+/Library/WebServer/Documents/delivery, referer http//www.segye.com/Articles/News/Society/Article.asp?aid=20121230020727&ctg1=01&ctg2=&subctg1=01&subctg2=&cid=0101080100000&OutUrl=naver
+--------------------------------------------
+2.Invalid URI in request GET invalid
+
+--------------------------------------------
+3.script not found or unable to stat
+/Library/WebServer/CGI-Executables/eshop.pl
+/Library/WebServer/CGI-Executables/a1disp3.cgi
+/Library/WebServer/CGI-Executables/a1stats
+/Library/WebServer/CGI-Executables/zml.cgi
+/Library/WebServer/CGI-Executables/aglimpse
+/Library/WebServer/CGI-Executables/publisher
+/Library/WebServer/CGI-Executables/ezshopper2
+/Library/WebServer/CGI-Executables/store.cgi
+/Library/WebServer/CGI-Executables/auktion.cgi
+/Library/WebServer/CGI-Executables/bsguest.cgi
+/Library/WebServer/CGI-Executables/bslist.cgi
+/Library/WebServer/CGI-Executables/cowsconf
+/Library/WebServer/CGI-Executables/DCShop
+/Library/WebServer/CGI-Executables/story.pl
+/Library/WebServer/CGI-Executables/directory.php
+/Library/WebServer/CGI-Executables/faqmanager.cgi
+/Library/WebServer/CGI-Executables/auktion.pl
+/Library/WebServer/CGI-Executables/hsx.cgi
+/Library/WebServer/CGI-Executables/ikonboard
+/Library/WebServer/CGI-Executables/mrtg.cgi
+/Library/WebServer/CGI-Executables/14all.cgi
+/Library/WebServer/CGI-Executables/14all-1.1.cgi
+/Library/WebServer/CGI-Executables/traffic.cgi
+/Library/WebServer/CGI-Executables/index.php
+/Library/WebServer/CGI-Executables/sendtemp.pl
+/Library/WebServer/CGI-Executables/talkback.cgi
+/Library/WebServer/CGI-Executables/ustorekeeper.pl
+/Library/WebServer/CGI-Executables/build.cgi
+/Library/WebServer/CGI-Executables/ad.cgi
+--------------------------------------------
+4.client denied by server configuration
+/Users/nhn/webRoot/test.html
+/Users/nhn/webRoot/favicon.ico
+/Users/nhn/webRoot/test2.html
+/Users/nhn/webRoot/test3.html
+/Users/nhn/webRoot/test33.html
+/Users/nhn/webRoot/
+--------------------------------------------
+5.attempt to invoke directory as script
+/Library/WebServer/CGI-Executables/
+

@@ -1,4 +1,4 @@
-def error_split (error, msg):
+def error_split (error, msg) :
 
 	msg_cause_position = msg.find('] [')+3
 	cause_text = msg[msg_cause_position:msg_cause_position+5]
