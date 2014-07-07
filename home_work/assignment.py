@@ -1,0 +1,2 @@
+print("Assignment")
+print("Homework")
